@@ -1,9 +1,9 @@
-# Django simple user authentication app
+# Django Data Analytics
 statistics/sells for sells on items
 statistics/city for users per city
 
-# License
-This app is a free software licensed under GPL3
+# Url
+https://xerixy.herokuapp.com/
 
 # Credits
 https://xerixy.com
