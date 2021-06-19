@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistics</title>
+</head>
+
+<body>
+    <h1>Statistics of Users per City</h1>
+    <canvas id="cityChart" width="400" height="400"></canvas>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.2/dist/chart.min.js"></script>
+    <script>
+        
+        var ctx = document.getElementById('cityChart').getContext('2d');
+        const cities = []
+        const city_data = []
+        const colors_a = []
+        const colors_s = []
+        {% for i in cities %}
+            cities.push("{{i.0}}")
+            city_data.push("{{i.1}}")
+        {% endfor %}
+        {% for color in colors %}
+            colors_a.push('rgba({{color}}, 0.2)')
+            colors_s.push('rgba({{color}}, 1)')
+        {% endfor %}
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: cities,
+                datasets: [{
+                    label: '# of users in City',
+                    data: city_data,
+                    backgroundColor: colors_a,
+                    borderColor: colors_s,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'index.css' %}">
+    <title>Home</title>
+</head>
+
+<body>
+    {% if request.user.is_authenticated %}
+    <div class="row py-5 px-4">
+        <div class="col-md-5 mx-auto">
+            <!-- Profile widget -->
+            <div class="bg-white shadow rounded overflow-hidden">
+                <div class="px-4 pt-0 pb-4 cover">
+                    <div class="media align-items-end profile-head">
+                        <div class="profile mr-3"><img src="{{ request.user.userprofile.avatar.url }}" alt="..."
+                                width="130" class="rounded mb-2 img-thumbnail">
+                            <a href="{% url 'lg:logout' %}" class="btn btn-outline-danger btn-sm btn-block">Logout</a>
+                        </div>
+                        <div class="media-body mb-5 text-white">
+                            <h4 class="mt-0 mb-0">{{ request.user.username }}</h4>
+                            <p class="small mb-4"> <i
+                                    class="fas fa-map-marker-alt mr-2"></i>{{ request.user.userprofile.city }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-light p-4 d-flex justify-content-end text-center">
+                    <ul class="list-inline mb-0">
+                        <li class="list-inline-item">
+                            <h5 class="font-weight-bold mb-0 d-block">{{count_arts}}</h5><small class="text-muted"> <i
+                                    class="fas fa-image mr-1"></i>Articles</small>
+                            <a href="{% url 'lg:add_article' %}" class="btn btn-outline-primary btn-sm btn-block">Add
+                                article</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="px-4 py-3">
+                    <h5 class="mb-0">About</h5>
+                    <div class="p-4 rounded shadow-sm bg-light">
+                        <p class="font-italic mb-0">Lives in {{ request.user.userprofile.city }}</p>
+                    </div>
+                </div>
+                {% if count_arts > 0 %}
+                <div class="py-4 px-4">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <h5 class="mb-0">Articles</h5>
+                        <span id="buyStatus" class="badge"></span>
+                    </div>
+                    <div class="row articles">
+                        <ul class="responsive-table">
+                            <li class="table-header">
+                                <div class="col col-1">Id</div>
+                                <div class="col col-2">Name</div>
+                                <div class="col col-2">Owner</div>
+                                <div class="col col-3">Price</div>
+                                <div class="col col-4">Category</div>
+                                <div class="col col-5">-</div>
+                            </li>
+                            {% for art in arts %}
+                            <li class="table-row">
+                                <div class="col col-1" data-label="Job Id">{{art.id}}</div>
+                                <div class="col col-2" data-label="Customer Name">{{art.name}}</div>
+                                <div class="col col-2" data-label="Customer Name">{{art.user}}</div>
+                                <div class="col col-3" data-label="Amount">{{art.price}}</div>
+                                <div class="col col-4" data-label="Payment Status">{{art.category}}</div>
+                                <div class="col col-5" data-label="Payment Status"><button class="btn btn-warning"
+                                        id="item-{{art.id}}" onclick="Buy({{art.id}})">Buy</button></div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="{% static 'js/index.js' %}"></script>
+    {% endif %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+</body>
+
+</html>
